@@ -1,7 +1,9 @@
-// -lGL -lGLU -lglut
+// -lGL -lGLU -lglut -lSOIL
 
 #include <GL/glut.h>
 #include <GL/gl.h>
+#include <SOIL/SOIL.h>
+#include <cmath>
 
 void drawObjects() {
 
@@ -65,7 +67,54 @@ void drawObjects() {
 
 
     // Trees
-    
+    glPushMatrix();
+
+    glTranslatef(-8.0, -2.5, 10.0);
+
+     // Draw trunk
+    glColor3f(0.5, 0.35, 0.05); // Brown color for the trunk
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.5, -5);  // multiply each coordinate by 10
+    glVertex2f(0.5, -5);
+    glVertex2f(0.5, 0);
+    glVertex2f(-0.5, 0);
+    glEnd();
+
+    // Draw branches
+    // glColor3f(0.0, 0.8, 0.0); // Green color for the branches
+    // glBegin(GL_POLYGON);
+    // for (float angle = 0; angle < 2 * M_PI; angle += 0.1) {
+    //     float x = 10 * sin(angle);
+    //     float y = 20 + 10 * cos(angle);
+    //     glVertex2f(x, y); // multiply each coordinate by 10
+    // }
+
+    glPopMatrix();
+
+    glPushMatrix();
+
+    glTranslatef(-1.0, -2.5, 10.0);
+
+     // Draw trunk
+    glColor3f(0.5, 0.35, 0.05); // Brown color for the trunk
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.5, -5);  // multiply each coordinate by 10
+    glVertex2f(0.5, -5);
+    glVertex2f(0.5, 0);
+    glVertex2f(-0.5, 0);
+    glEnd();
+
+    // Draw branches
+    // Draw branches
+    // glColor3f(0.0, 0.8, 0.0); // Green color for the branches
+    // glBegin(GL_POLYGON);
+    // for (float angle = 0; angle < 2 * M_PI; angle += 0.1) {
+    //     float x = 10 * sin(angle);
+    //     float y = 20 + 10 * cos(angle);
+    //     glVertex2f(x, y); // multiply each coordinate by 10
+    // }
+
+    glPopMatrix();
 
 
 

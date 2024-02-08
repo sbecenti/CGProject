@@ -82,8 +82,8 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
-    //glBufferData(GL_ARRAY_BUFFER, prescottBase.arrSize(), prescottBase.getVertices(), GL_STATIC_DRAW);
-    glBufferData(GL_ARRAY_BUFFER, floor0.arrSize(), floor0.getVertices(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, prescottBase.arrSize(), prescottBase.getVertices(), GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, floor0.arrSize(), floor0.getVertices(), GL_STATIC_DRAW);
 
     // Position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
