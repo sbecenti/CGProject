@@ -1,54 +1,89 @@
 // -lGL -lGLU -lglut
 
 #include <GL/glut.h>
+#include <GL/gl.h>
 
 void drawObjects() {
 
     // ===================================================
-    // Draw rectangular prism (front and side of building)
+    //                  Draw Building
     // ===================================================
 
     glBegin(GL_QUADS);
 
-    // Front face (red)
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex3f(-1.75, -0.5, 0.5); // Bottom-left
-    glVertex3f(0.75, -0.5, 0.5);  // Bottom-right
-    glVertex3f(0.75, 0.5, 0.5);   // Top-right
-    glVertex3f(-1.75, 0.5, 0.5);  // Top-left
+    // Front face of building (red)
+    glColor3f(0.6, 0.3, 0.0);
+    glVertex3f(-17.5, -5.5, 5.0); // Bottom-left
+    glVertex3f(7.5, -5.5, 5.0);   // Bottom-right
+    glVertex3f(7.5, 5.0, 5.0);    // Top-right
+    glVertex3f(-17.5, 5.0, 5.0);  // Top-left
 
-    // Right face (blue)
-    glColor3f(0.0, 0.0, 1.0);
-    glVertex3f(0.75, -0.5, 0.5);   // Bottom-front
-    glVertex3f(0.75, -0.5, -3.5);  // Bottom-back
-    glVertex3f(0.75, 0.5, -3.5);   // Top-back
-    glVertex3f(0.75, 0.5, 0.5);    // Top-front
+    // Right face of building (blue)
+    glColor3f(0.4, 0.2, 0.0);
+    glVertex3f(7.5, -5.5, 5.0);    // Bottom-front
+    glVertex3f(7.5, -5.5, -55.0);  // Bottom-back
+    glVertex3f(7.5, 5.0, -55.0);   // Top-back
+    glVertex3f(7.5, 5.0, 5.0);     // Top-front
+
+    glEnd();
 
     // ===================================================
-    //     Draw rectangular shape (floor of the scene)
+    //                Draw Floor of Scene
     // ===================================================
+    
+    // Slope going across screen
+    glBegin(GL_QUADS);
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(-27.5, -8.0, 15.0); // Bottom-left
+    glVertex3f(17.5, -8.0, 15.0);  // Bottom-right
+    glVertex3f(17.5, -6.5, 5.0);    // Top-right
+    glVertex3f(-27.5, -6.5, 5.0);   // Top-left
+    glEnd();
+    
 
-    glColor3f(1.0, 1.0, 0.0);
-    glVertex3f(-1.75, -0.5, 0.5); // Bottom-left
-    glVertex3f(0.75, -0.5, 0.5);  // Bottom-right
-    glVertex3f(0.75, 0.5, 0.5);   // Top-right
-    glVertex3f(-1.75, 0.5, 0.5);  // Top-left
+    glBegin(GL_QUADS);
+
+    // Field floor (very bottom)
+    glColor3f(0.0, 0.5, 0.0);
+    glVertex3f(-27.5, -10.0, 25.0); // Bottom-left
+    glVertex3f(17.5, -15.0, 25.0);  // Bottom-right
+    glVertex3f(17.5, -8.0, 15.0);    // Top-right
+    glVertex3f(-27.5, -8.0, 15.0);   // Top-left
+
+    // ===================================================
+    //                Draw Objects of Scene
+    // ===================================================
+    
+    // Purple fence
+    glColor3f(0.5, 0.0, 0.5);
+    glVertex3f(-27.5, -6.5, 5.0);  // Bottom-left
+    glVertex3f(17.5, -6.5, 5.0);   // Bottom-right
+    glVertex3f(17.5, -5.5, 5.0);   // Top-right
+    glVertex3f(-27.5, -5.5, 5.0);  // Top-left
+
+    glEnd();
+
+
+    // Trees
+    
+
 
 
     
-    glEnd();
-
     glutSwapBuffers();
 }
 
 void drawScene() {
+
+    // Sky color
+    glClearColor(0.5, 0.8, 1.0, 1.0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(2, -1, 3, 0, 0, 0, 0, 1, 0);
+    gluLookAt(15.0, -5.0, 30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
     drawObjects();
 
@@ -65,7 +100,7 @@ int main(int argc, char** argv) {
     glEnable(GL_DEPTH_TEST);
 
     glMatrixMode(GL_PROJECTION);
-    gluPerspective(60, 1, 1, 20);
+    gluPerspective(60, 1, 10, 200);
 
     glMatrixMode(GL_MODELVIEW);
 
