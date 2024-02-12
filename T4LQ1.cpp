@@ -1,3 +1,6 @@
+// Samson Becenti & Spencer Meren
+// CST-310
+
 // -lGL -lGLU -lglut -lSOIL
 // Use to easily pick colors: https://antongerdelan.net/colour/
 
@@ -25,6 +28,19 @@ void drawTree() {
         float x = 2.5 * sin(angle); // Radius of 0.5
         float y = 2.5 * cos(angle); // Radius of 0.5
     glVertex2f(x, y);
+    }
+    glEnd();
+}
+
+void drawPerson() {
+    // Draw oval to represent a person
+    glColor3f(0.403, 0.585, 0.630);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 100; i++) {
+        float theta = 2.0f * M_PI * float(i) / float(100);
+        float x = 0.35 * cosf(theta);
+        float y = 0.75 * sinf(theta);
+        glVertex2f(x + 0, y + 0);
     }
     glEnd();
 }
@@ -259,22 +275,14 @@ void drawObjects() {
     
     // Building in the far back left
     glPushMatrix();
-
     glTranslatef(-30.0, -7.0, 5.0);
-
     glBegin(GL_POLYGON);
-
     glColor3f(0.96, 0.87, 0.70);
-
     glVertex2f(15.0, 0.0); //Bottom-left
     glVertex2f(0.0, 0.0); //Bottom-right
     glVertex2f(0.0, 5.0); //Top-right
     glVertex2f(15.0, 5.0); //Top-left
-
-
-
     glEnd();
-
     glPopMatrix();
     
     // Purple fence
@@ -331,7 +339,6 @@ void drawObjects() {
     glPushMatrix();
     glTranslatef(-12.0, -2.5, 10.0);
     drawTree();
-    glEnd();
     glPopMatrix();
 
     // Right Tree
@@ -366,13 +373,50 @@ void drawObjects() {
         glEnd();
         glPopMatrix(); 
     }
-
     glPopMatrix();
-    
 
+    // student 1
+    glPushMatrix();
+    glTranslatef(4.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
 
+    // student 2
+    glPushMatrix();
+    glTranslatef(3.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
 
-    
+    // student 3
+    glPushMatrix();
+    glTranslatef(2.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 4
+    glPushMatrix();
+    glTranslatef(-1.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 5
+    glPushMatrix();
+    glTranslatef(-3.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 6
+    glPushMatrix();
+    glTranslatef(-6.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 7
+    glPushMatrix();
+    glTranslatef(-12.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
     glutSwapBuffers();
 }
 
@@ -402,7 +446,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
     //glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     //glutInitWindowSize(400, 400);
-    glutCreateWindow("#D Building");
+    glutCreateWindow("Prescott Building");
 
     glEnable(GL_DEPTH_TEST);
 
