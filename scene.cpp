@@ -1,3 +1,6 @@
+// Samson Becenti & Spencer Meren
+// CST-310
+
 // -lGL -lGLU -lglut -lSOIL
 // Use to easily pick colors: https://antongerdelan.net/colour/
 
@@ -5,6 +8,9 @@
 #include <GL/gl.h>
 #include <SOIL/SOIL.h>
 #include <cmath>
+
+#include "objects/building.cpp"
+#include "objects/floor.cpp"
 
 void drawTree() {
     // Draw trunk
@@ -29,133 +35,49 @@ void drawTree() {
     glEnd();
 }
 
+void drawPerson() {
+    // Draw oval to represent a person
+    glColor3f(0.403, 0.585, 0.630);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 100; i++) {
+        float theta = 2.0f * M_PI * float(i) / float(100);
+        float x = 0.35 * cosf(theta);
+        float y = 0.75 * sinf(theta);
+        glVertex2f(x + 0, y + 0);
+    }
+    glEnd();
+}
+
+//TODO: GCBC Poster
+
 void drawObjects() {
 
     // ===================================================
     //                  Draw Building
     // ===================================================
-
-    glBegin(GL_QUADS);
-
-    // Front face of building
-    glColor3f(0.96, 0.87, 0.70);
-    glVertex3f(-17.5, -8.5, 5.0); // Bottom-left
-    glVertex3f(7.5, -8.5, 5.0);   // Bottom-right
-    glVertex3f(7.5, 5.0, 5.0);    // Top-right
-    glVertex3f(-17.5, 5.0, 5.0);  // Top-left
-
-    // Right face of building
-    glColor3f(0.76, 0.67, 0.50);
-    glVertex3f(7.5, -8.5, 5.0);    // Bottom-front
-    glVertex3f(7.5, -8.5, -55.0);  // Bottom-back
-    glVertex3f(7.5, 5.0, -55.0);   // Top-back
-    glVertex3f(7.5, 5.0, 5.0);     // Top-front
-
-    //Corner Pillar (left-front)
-    glColor3f(0.6, 0.2, 0.2);//Front face
-    glVertex3f(6.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(9.0, -8.5, 6.0); // Bottom-right
-    glVertex3f(9.0, 5.0, 6.0);  // Top-right
-    glVertex3f(6.0, 5.0, 6.0);  // Top-left
-
-    //glColor3f(0.6, 0.2, 0.2);//Right face
-    glVertex3f(9.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(9.0, -8.5, 2.0); // Bottom-right
-    glVertex3f(9.0, 5.0, 2.0);  // Top-right
-    glVertex3f(9.0, 5.0, 6.0);  // Top-left
-
-    //Corner Pillar (right-front, red front, blue side)
-    glColor3f(0.6, 0.2, 0.2);//Front face
-    glVertex3f(-19.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(-16.0, -8.5, 6.0); // Bottom-right
-    glVertex3f(-16.0, 5.0, 6.0);  // Top-right
-    glVertex3f(-19.0, 5.0, 6.0);  // Top-left
-
-    //glColor3f(0.6, 0.2, 0.2);//Right face
-    glVertex3f(-16.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(-16.0, -8.5, 5.0); // Bottom-right
-    glVertex3f(-16.0, 5.0, 5.0);  // Top-right
-    glVertex3f(-16.0, 5.0, 6.0);  // Top-left
-
-    // Front face green sections (4 total)
-    int interval = (22.0)/9.0; //6-(-16) = distance between pillars
-    glColor3f(0.585, 0.730, 0.409);
-    glVertex3f(-16.0 + interval * 1.0, -8.5, 5.01); // Bottom-left
-    glVertex3f(-16.0 + interval * 2.0, -8.5, 5.01);   // Bottom-right
-    glVertex3f(-16.0 + interval * 2.0, 5.0, 5.01);    // Top-right
-    glVertex3f(-16.0 + interval * 1.0, 5.0, 5.01);  // Top-left
-
-    glVertex3f(-16.0 + interval * 4.0, -8.5, 5.01); // Bottom-left
-    glVertex3f(-16.0 + interval * 5.0, -8.5, 5.01);   // Bottom-right
-    glVertex3f(-16.0 + interval * 5.0, 5.0, 5.01);    // Top-right
-    glVertex3f(-16.0 + interval * 4.0, 5.0, 5.01);  // Top-left
-
-    glVertex3f(-16.0 + interval * 7.0, -8.5, 5.01); // Bottom-left
-    glVertex3f(-16.0 + interval * 8.0, -8.5, 5.01);   // Bottom-right
-    glVertex3f(-16.0 + interval * 8.0, 5.0, 5.01);    // Top-right
-    glVertex3f(-16.0 + interval * 7.0, 5.0, 5.01);  // Top-left
-
-    glVertex3f(-16.0 + interval * 10.0, -8.5, 5.01); // Bottom-left
-    glVertex3f(-16.0 + interval * 11.0, -8.5, 5.01);   // Bottom-right
-    glVertex3f(-16.0 + interval * 11.0, 5.0, 5.01);    // Top-right
-    glVertex3f(-16.0 + interval * 10.0, 5.0, 5.01);  // Top-left
-
-    glEnd();
+    
+    drawBuilding();
 
     // ===================================================
     //                Draw Floor of Scene
     // ===================================================
     
-    // Grass Slope going across screen
-    glBegin(GL_QUADS);
-    glColor3f(0.363, 0.560, 0.353);
-    glVertex3f(-27.5, -8.0, 15.0); // Bottom-left
-    glVertex3f(17.5, -8.0, 15.0);  // Bottom-right
-    glVertex3f(17.5, -6.5, 5.0);    // Top-right
-    glVertex3f(-27.5, -6.5, 5.0);   // Top-left
-    glEnd();
-    
-    // Concrete Slope
-    glBegin(GL_QUADS);
-    glColor3f(0.5, 0.5, 0.5);
-    glVertex3f(4.0, -8.0, 15.01); // Bottom-left
-    glVertex3f(12.0, -8.0, 15.01);  // Bottom-right
-    glVertex3f(12.0, -6.5, 5.01);    // Top-right
-    glVertex3f(4.0, -6.5, 5.01);   // Top-left
-    glEnd();
-    
-    // Field floor (very bottom)
-    glBegin(GL_QUADS);
-    glColor3f(0.385, 0.470, 0.381);
-    glVertex3f(-27.5, -10.0, 25.0); // Bottom-left
-    glVertex3f(17.5, -15.0, 25.0);  // Bottom-right
-    glVertex3f(17.5, -8.0, 15.0);    // Top-right
-    glVertex3f(-27.5, -8.0, 15.0);   // Top-left
-
-    glEnd();
+    drawFloor();
 
     // ===================================================
     //                Draw Objects of Scene
     // ===================================================
-
+    
     // Building in the far back left
     glPushMatrix();
-
     glTranslatef(-30.0, -7.0, 5.0);
-
     glBegin(GL_POLYGON);
-
     glColor3f(0.96, 0.87, 0.70);
-
     glVertex2f(15.0, 0.0); //Bottom-left
     glVertex2f(0.0, 0.0); //Bottom-right
     glVertex2f(0.0, 5.0); //Top-right
     glVertex2f(15.0, 5.0); //Top-left
-
-
-
     glEnd();
-
     glPopMatrix();
     
     // Purple fence
@@ -212,7 +134,6 @@ void drawObjects() {
     glPushMatrix();
     glTranslatef(-12.0, -2.5, 10.0);
     drawTree();
-    glEnd();
     glPopMatrix();
 
     // Right Tree
@@ -247,10 +168,50 @@ void drawObjects() {
         glEnd();
         glPopMatrix(); 
     }
-
     glPopMatrix();
 
-    
+    // student 1
+    glPushMatrix();
+    glTranslatef(4.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 2
+    glPushMatrix();
+    glTranslatef(3.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 3
+    glPushMatrix();
+    glTranslatef(2.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 4
+    glPushMatrix();
+    glTranslatef(-1.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 5
+    glPushMatrix();
+    glTranslatef(-3.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 6
+    glPushMatrix();
+    glTranslatef(-6.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
+    // student 7
+    glPushMatrix();
+    glTranslatef(-12.0, -5.5, 7.4);
+    drawPerson();
+    glPopMatrix();
+
     glutSwapBuffers();
 }
 
@@ -264,19 +225,23 @@ void drawScene() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(15.0, -6.0, 30.0, -5.0, 6.0, 0.0, 0.0, 1.0, 0.0);
+    //gluLookAt(15.0, -5.0, 30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(15.0, -6.0, 30.0, -5.0, 6.0, 0.0, 0.0, 1.0, 0.0); //Updated angle
 
     drawObjects();
 
-    glutSwapBuffers();
+    glFlush();
+    //glutSwapBuffers();
 
 }
 
 int main(int argc, char** argv) {
 
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutCreateWindow("#D Building");
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+    //glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    //glutInitWindowSize(400, 400);
+    glutCreateWindow("Prescott Building");
 
     glEnable(GL_DEPTH_TEST);
 
