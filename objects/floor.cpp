@@ -12,10 +12,10 @@ void drawFloor() {
     glBegin(GL_QUADS);
     glColor3f(0.363, 0.560, 0.353);
     //glColor3f(0.0, 1.0, 0.0);
-    glVertex3f(-27.5, -8.0, 15.0); // Bottom-left
+    glVertex3f(-30.5, -8.0, 15.0); // Bottom-left
     glVertex3f(17.5, -8.0, 15.0);  // Bottom-right
     glVertex3f(17.5, -6.5, 5.0);    // Top-right
-    glVertex3f(-27.5, -6.5, 5.0);   // Top-left
+    glVertex3f(-30.5, -6.5, 5.0);   // Top-left
     glEnd();
     
     //Concrete Slope

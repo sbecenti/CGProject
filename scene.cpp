@@ -8,32 +8,13 @@
 #include <GL/gl.h>
 #include <SOIL/SOIL.h>
 #include <cmath>
+#include <cstdlib> // for rand() and srand()
+#include <ctime>   // for time()
+
 
 #include "objects/building.cpp"
 #include "objects/floor.cpp"
-
-void drawTree() {
-    // Draw trunk
-    glColor3f(0.5, 0.35, 0.05); // Brown color for the trunk
-    glBegin(GL_POLYGON);
-    glVertex2f(-0.4, -5); 
-    glVertex2f(0.4, -5);
-    glVertex2f(0.4, 0);
-    glVertex2f(-0.4, 0);
-    glEnd();
-
-    // Draw leaves
-    glColor3f(0.0, 0.6, 0.0); // Green color for the leaves
-    glTranslatef(0.0, 1.0, 0.3); // Move up to the top of the trunk
-    glRotatef(25, 0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    for (float angle = 0; angle < 2 * M_PI; angle += 0.1) {
-        float x = 2.5 * sin(angle); // Radius of 0.5
-        float y = 2.5 * cos(angle); // Radius of 0.5
-    glVertex2f(x, y);
-    }
-    glEnd();
-}
+#include "objects/tree.cpp"
 
 void drawPerson() {
     // Draw oval to represent a person
@@ -42,7 +23,7 @@ void drawPerson() {
     for (int i = 0; i < 100; i++) {
         float theta = 2.0f * M_PI * float(i) / float(100);
         float x = 0.35 * cosf(theta);
-        float y = 0.75 * sinf(theta);
+        float y = 0.75 * sinf(theta); // Varying height
         glVertex2f(x + 0, y + 0);
     }
     glEnd();
@@ -70,7 +51,7 @@ void drawObjects() {
     
     // Building in the far back left
     glPushMatrix();
-    glTranslatef(-30.0, -7.0, 5.0);
+    glTranslatef(-33.0, -7.0, 5.0);
     glBegin(GL_POLYGON);
     glColor3f(0.96, 0.87, 0.70);
     glVertex2f(15.0, 0.0); //Bottom-left
@@ -79,6 +60,43 @@ void drawObjects() {
     glVertex2f(15.0, 5.0); //Top-left
     glEnd();
     glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-22.0, -6.0, 6.0);
+    glBegin(GL_POLYGON);
+    glColor3f(0.90, 0.81, 0.64);
+    glVertex2f(5.0, 0.0); //Bottom-left
+    glVertex2f(0.0, 0.0); //Bottom-right
+    glVertex2f(0.0, 5.0); //Top-right
+    glVertex2f(5.0, 5.0); //Top-left
+    glEnd();
+    glPopMatrix();
+
+    // window
+    glPushMatrix();
+    glTranslatef(-25.0, -5.0, 6.0);
+    glBegin(GL_POLYGON);
+    glColor3f(0.3, 0.3, 0.5);
+    glVertex2f(2.0, 0.0); //Bottom-left
+    glVertex2f(0.0, 0.0); //Bottom-right
+    glVertex2f(0.0, 1.0); //Top-right
+    glVertex2f(2.0, 1.0); //Top-left
+    glEnd();
+    glPopMatrix();
+
+    // roof
+    glPushMatrix();
+    glTranslatef(-30.0, -3.5, 7.0);
+    glRotatef(-45, 1.0, 0.0, 0.0);
+    glBegin(GL_POLYGON);
+    glColor3f(0.55, 0.16, 0.16);
+    glVertex2f(10.0, 0.0); //Bottom-left
+    glVertex2f(0.0, 0.0); //Bottom-right
+    glVertex2f(0.0, 2.0); //Top-right
+    glVertex2f(10.0, 2.0); //Top-left
+    glEnd();
+    glPopMatrix();
+
     
     // Purple fence
     //Horizontal bar
@@ -136,10 +154,30 @@ void drawObjects() {
     drawTree();
     glPopMatrix();
 
+    // shadow
+    glPushMatrix();
+    glTranslatef(-14.0, -7.0, 10.0);
+    glRotatef(-80, 1.0, 0.0, 0.0);
+    glRotatef(65.0, 0.0, 0.0, 1.0);
+    glRotatef(2.0, 0.0, 1.0, 0.0);
+    glScalef(0.5, 0.5, 0.5);
+    drawTreeShadow();
+    glPopMatrix();
+
     // Right Tree
     glPushMatrix();
     glTranslatef(-1.0, -2.5, 10.0);
     drawTree();
+    glPopMatrix();
+
+    // shadow
+    glPushMatrix();
+    glTranslatef(-3.0, -7.0, 10.0);
+    glRotatef(-80, 1.0, 0.0, 0.0);
+    glRotatef(65.0, 0.0, 0.0, 1.0);
+    glRotatef(2.0, 0.0, 1.0, 0.0);
+    glScalef(0.5, 0.5, 0.5);
+    drawTreeShadow();
     glPopMatrix();
 
     // Far Right Tree
@@ -157,60 +195,31 @@ void drawObjects() {
 
     // Draw branches
     glColor3f(0.5, 0.35, 0.05); // Brown color for the branches    
-    for(float angle = 130.0; angle <= 220.0; angle += 30.0) {
+    for(float angle = -45.0; angle <= 45.0; angle += 30.0) {
         glPushMatrix();
         glRotatef(angle, 0.0, 0.0, 1.0); // Apply rotation
         glBegin(GL_POLYGON);
-        glVertex2f(-0.2, -2.5);  
-        glVertex2f(0.1, -2.5);
-        glVertex2f(0.1, 0);
+        glVertex2f(0.2, 0);  
+        glVertex2f(0.1, 2);
+        glVertex2f(-0.1, 2);
         glVertex2f(-0.2, 0);
         glEnd();
         glPopMatrix(); 
     }
     glPopMatrix();
 
-    // student 1
-    glPushMatrix();
-    glTranslatef(4.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
+    // Draw people
+    srand(time(NULL));
+    for (int i = 0; i < 10; ++i) {
+        float x = -15.0 + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 30.0)); // Random x within range
+        float y = -5.5;
+        float z = 7.4;
 
-    // student 2
-    glPushMatrix();
-    glTranslatef(3.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
-
-    // student 3
-    glPushMatrix();
-    glTranslatef(2.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
-
-    // student 4
-    glPushMatrix();
-    glTranslatef(-1.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
-
-    // student 5
-    glPushMatrix();
-    glTranslatef(-3.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
-
-    // student 6
-    glPushMatrix();
-    glTranslatef(-6.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
-
-    // student 7
-    glPushMatrix();
-    glTranslatef(-12.0, -5.5, 7.4);
-    drawPerson();
-    glPopMatrix();
+        glPushMatrix();
+        glTranslatef(x, y, z);
+        drawPerson();
+        glPopMatrix();
+    }
 
     glutSwapBuffers();
 }
@@ -240,10 +249,13 @@ int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
     //glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    //glutInitWindowSize(400, 400);
+    glutInitWindowSize(800, 800);
     glutCreateWindow("Prescott Building");
 
     glEnable(GL_DEPTH_TEST);
+
+    glEnable(GL_BLEND); // Enable blending for transparency
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Set blending function
 
     glMatrixMode(GL_PROJECTION);
     gluPerspective(60, 1, 10, 200);

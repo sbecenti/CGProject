@@ -186,6 +186,15 @@ void drawBuilding() {
         glVertex3d(x + 6.5, bottomText + 0.80, 6.02); //Bottom Text
  	}
 	glEnd();	
+
+     // Right face of building shadow
+    glBegin(GL_QUADS);
+    glColor4f(0.0, 0.0, 0.0, 0.7);
+    glVertex3f(8.0, -8.5, 5.0);    // Bottom-front
+    glVertex3f(8.0, -8.5, -55.0);  // Bottom-back
+    glVertex3f(8.0, 2.0, -55.0);   // Top-back
+    glVertex3f(8.0, 3.0, 5.0);     // Top-front
+	glEnd();
 	
     glFlush();	
 }
