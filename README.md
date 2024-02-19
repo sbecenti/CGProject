@@ -1,4 +1,4 @@
-# CST-310 Project 4: Render Your Scene With Primitives
+# CST-310 Project 5: Render Your Scene With Primitives
 
 Compile
 ---------------
