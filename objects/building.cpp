@@ -3,12 +3,79 @@
 #include <SOIL/SOIL.h>
 #include <cmath>
 
-void drawBuilding() {
+void drawBuilding(GLuint brickTexture) {
     // ===================================================
     //                  Draw Building
     // ===================================================
 
+    glBindTexture(GL_TEXTURE_2D, brickTexture);
+
+    // Brick section
+
+    //Corner Pillar (right-front)
     glBegin(GL_QUADS);
+    //glColor3f(0.6, 0.2, 0.2);//Front face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(6.0, -8.5, 6.0); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(9.0, -8.5, 6.0); // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(9.0, 5.0, 6.0);  // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(6.0, 5.0, 6.0);  // Top-left
+   
+    //glColor3f(0.51, 0.12, 0.1);//Right face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(9.0, -8.5, 6.0); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(9.0, -8.5, 2.0); // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(9.0, 5.0, 2.0);  // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(9.0, 5.0, 6.0);  // Top-left
+	glEnd();
+
+    //Corner Pillar (left-front)
+    glBegin(GL_QUADS);
+    //glColor3f(0.6, 0.2, 0.2);//Front face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-19.0, -8.5, 6.0); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-16.0, -8.5, 6.0); // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-16.0, 5.0, 6.0);  // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(-19.0, 5.0, 6.0);  // Top-left
+
+    //glColor3f(0.51, 0.12, 0.1);//Right face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-16.0, -8.5, 6.0); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-16.0, -8.5, 5.0); // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-16.0, 5.0, 5.0);  // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(-16.0, 5.0, 6.0);  // Top-left
+	glEnd();
+
+    //Corner Pillar (right-back)
+    glBegin(GL_QUADS);
+    //glColor3f(0.6, 0.2, 0.2);//Front face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(6.0, -8.5, -52.0); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(9.0, -8.5, -52.0); // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(9.0, 5.0, -52.0);  // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(6.0, 5.0, -52.0);  // Top-left
+
+    //glColor3f(0.51, 0.12, 0.1);//Right face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(9.0, -8.5, -52.0); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(9.0, -8.5, -56.0); // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(9.0, 5.0, -56.0);  // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(9.0, 5.0, -52.0);  // Top-left
+	glEnd();
+
+    //Brick lining front
+    glBegin(GL_QUADS);
+    //glColor3f(0.55, 0.16, 0.16);//Front face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-17.5, -8.5, 5.02); // Bottom-left
+    glTexCoord2f(1.0f, 0.0f); glVertex3f( 7.5,  -8.5, 5.02);   // Bottom-right
+    glTexCoord2f(1.0f, 1.0f); glVertex3f( 7.5,  -4.0, 5.02);    // Top-right
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(-17.5, -4.0, 5.02);  // Top-left
+	glEnd();
+
+    // RBrick lining right
+    glBegin(GL_QUADS);
+    //glColor3f(0.46, 0.09, 0.07);//Right face
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(7.52, -8.5, 5.0);    // Bottom-front
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(7.52, -8.5, -55.0);  // Bottom-back
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(7.52, -4.0, -55.0);   // Top-back
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(7.52, -4.0, 5.0);     // Top-front
+	glEnd();
+    
+    glDisable(GL_TEXTURE_2D);
 
     // Front face of building
     glBegin(GL_QUADS);
@@ -28,50 +95,6 @@ void drawBuilding() {
     glVertex3f(7.5, 5.0, 5.0);     // Top-front
 	glEnd();
 
-    //Corner Pillar (right-front)
-    glBegin(GL_QUADS);
-    glColor3f(0.6, 0.2, 0.2);//Front face
-    glVertex3f(6.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(9.0, -8.5, 6.0); // Bottom-right
-    glVertex3f(9.0, 5.0, 6.0);  // Top-right
-    glVertex3f(6.0, 5.0, 6.0);  // Top-left
-   
-    glColor3f(0.51, 0.12, 0.1);//Right face
-    glVertex3f(9.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(9.0, -8.5, 2.0); // Bottom-right
-    glVertex3f(9.0, 5.0, 2.0);  // Top-right
-    glVertex3f(9.0, 5.0, 6.0);  // Top-left
-	glEnd();
-
-    //Corner Pillar (left-front)
-    glBegin(GL_QUADS);
-    glColor3f(0.6, 0.2, 0.2);//Front face
-    glVertex3f(-19.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(-16.0, -8.5, 6.0); // Bottom-right
-    glVertex3f(-16.0, 5.0, 6.0);  // Top-right
-    glVertex3f(-19.0, 5.0, 6.0);  // Top-left
-
-    glColor3f(0.51, 0.12, 0.1);//Right face
-    glVertex3f(-16.0, -8.5, 6.0); // Bottom-left
-    glVertex3f(-16.0, -8.5, 5.0); // Bottom-right
-    glVertex3f(-16.0, 5.0, 5.0);  // Top-right
-    glVertex3f(-16.0, 5.0, 6.0);  // Top-left
-	glEnd();
-
-    //Corner Pillar (right-back)
-    glBegin(GL_QUADS);
-    glColor3f(0.6, 0.2, 0.2);//Front face
-    glVertex3f(6.0, -8.5, -52.0); // Bottom-left
-    glVertex3f(9.0, -8.5, -52.0); // Bottom-right
-    glVertex3f(9.0, 5.0, -52.0);  // Top-right
-    glVertex3f(6.0, 5.0, -52.0);  // Top-left
-
-    glColor3f(0.51, 0.12, 0.1);//Right face
-    glVertex3f(9.0, -8.5, -52.0); // Bottom-left
-    glVertex3f(9.0, -8.5, -56.0); // Bottom-right
-    glVertex3f(9.0, 5.0, -56.0);  // Top-right
-    glVertex3f(9.0, 5.0, -52.0);  // Top-left
-	glEnd();
 
     // Front face green sections (4 total)
     //  Right side of left pillar: x = -16
@@ -139,25 +162,6 @@ void drawBuilding() {
         }
     }
 	glEnd();
-
-    //Brick lining
-    glBegin(GL_QUADS);
-    glColor3f(0.55, 0.16, 0.16);//Front face
-    glVertex3f(-17.5, -8.5, 5.02); // Bottom-left
-    glVertex3f( 7.5,  -8.5, 5.02);   // Bottom-right
-    glVertex3f( 7.5,  -4.0, 5.02);    // Top-right
-    glVertex3f(-17.5, -4.0, 5.02);  // Top-left
-	glEnd();
-
-    // Right face of building
-    glBegin(GL_QUADS);
-    glColor3f(0.46, 0.09, 0.07);//Right face
-    glVertex3f(7.52, -8.5, 5.0);    // Bottom-front
-    glVertex3f(7.52, -8.5, -55.0);  // Bottom-back
-    glVertex3f(7.52, -4.0, -55.0);   // Top-back
-    glVertex3f(7.52, -4.0, 5.0);     // Top-front
-	glEnd();
-    
 
     //GCBC Poster
     glBegin(GL_QUADS);

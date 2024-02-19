@@ -4,17 +4,22 @@
 // -lGL -lGLU -lglut -lSOIL
 // Use to easily pick colors: https://antongerdelan.net/colour/
 
+#include <iostream>
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <SOIL/SOIL.h>
 #include <cmath>
 #include <cstdlib> // for rand() and srand()
 #include <ctime>   // for time()
+#include <cstdio>
 
 
 #include "objects/building.cpp"
 #include "objects/floor.cpp"
 #include "objects/tree.cpp"
+
+GLuint brickTexture;    //texture for brick
+GLuint grassTexture;    // grass
 
 void drawPerson() {
     // Draw oval to represent a person
@@ -37,7 +42,7 @@ void drawObjects() {
     //                  Draw Building
     // ===================================================
     
-    drawBuilding();
+    drawBuilding(brickTexture);
 
     // ===================================================
     //                Draw Floor of Scene
@@ -102,30 +107,43 @@ void drawObjects() {
     //Horizontal bar
     glBegin(GL_QUADS);
     glColor3f(0.5, 0.0, 0.5);
-    glVertex3f(-27.5, -5.5, 7.5);  // Bottom-left
-    glVertex3f(8.0, -5.5, 7.5);   // Bottom-right
-    glVertex3f(8.0, -5.3, 7.5);   // Top-right
-    glVertex3f(-27.5, -5.3, 7.5);  // Top-left
+    glVertex3f(-27.5, -5.7, 7.5);  // Bottom-left
+    glVertex3f(8.5, -5.7, 7.5);   // Bottom-right
+    glVertex3f(8.5, -5.6, 7.5);   // Top-right
+    glVertex3f(-27.5, -5.6, 7.5);  // Top-left
     glEnd();
 
     glBegin(GL_QUADS);
     glColor3f(0.5, 0.0, 0.5);
-    glVertex3f(12.0, -5.5, 7.5);  // Bottom-left
-    glVertex3f(17.0, -5.5, 7.5);   // Bottom-right
-    glVertex3f(17.0, -5.3, 7.5);   // Top-right
-    glVertex3f(12.0, -5.3, 7.5);  // Top-left
+    glVertex3f(12.0, -5.7, 7.5);  // Bottom-left
+    glVertex3f(17.0, -5.7, 7.5);   // Bottom-right
+    glVertex3f(17.0, -5.6, 7.5);   // Top-right
+    glVertex3f(12.0, -5.6, 7.5);  // Top-left
     glEnd();
 
     //Vertical Bars
-    for (float x = -27.5; x <= 17.0; x+=0.75) {
+    int i = 0;
+    for (float x = -27.5; x <= 17.0; x+=0.25) {
+        i++;
         if (x < 8.5 || x > 11.5) {
-            glBegin(GL_QUADS);
-            glColor3f(0.5, 0.0, 0.5);
-            glVertex3f(x, -6.5, 7.5);  // Bottom-left
-            glVertex3f(x + 0.2, -6.5, 7.5);   // Bottom-right
-            glVertex3f(x + 0.2, -5.5, 7.5);   // Top-right
-            glVertex3f(x, -5.5, 7.5);  // Top-left
-            glEnd();
+            if ((i % 5) == 0) {
+                glBegin(GL_QUADS);
+                glColor3f(0.5, 0.0, 0.5);
+                glVertex3f(x, -6.5, 7.5);  // Bottom-left
+                glVertex3f(x + 0.2, -6.5, 7.5);   // Bottom-right
+                glVertex3f(x + 0.2, -5.7, 7.5);   // Top-right
+                glVertex3f(x, -5.7, 7.5);  // Top-left
+                glEnd();
+            }
+            else {
+                glBegin(GL_QUADS);
+                glColor3f(0.5, 0.0, 0.5);
+                glVertex3f(x, -6.5, 7.5);  // Bottom-left
+                glVertex3f(x + 0.1, -6.5, 7.5);   // Bottom-right
+                glVertex3f(x + 0.1, -5.7, 7.5);   // Top-right
+                glVertex3f(x, -5.7, 7.5);  // Top-left
+                glEnd();
+            }
         }
     }
     
@@ -253,9 +271,16 @@ int main(int argc, char** argv) {
     glutCreateWindow("Prescott Building");
 
     glEnable(GL_DEPTH_TEST);
-
     glEnable(GL_BLEND); // Enable blending for transparency
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Set blending function
+
+    // Texture initialization
+    glGenTextures(1, &brickTexture);
+    brickTexture = SOIL_load_OGL_texture("brick-wall.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, brickTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     glMatrixMode(GL_PROJECTION);
     gluPerspective(60, 1, 10, 200);
