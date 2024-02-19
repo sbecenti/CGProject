@@ -4,7 +4,7 @@ Compile
 ---------------
 To compile the program, navigate to the directory containing `T4LQ1.cpp` and run the following command in your terminal:
 
-    g++ T4LQ1.cpp -o prescott-render -lGL -lGLU -lglut
+    g++ scene.cpp -o prescott-render -lGL -lGLU -lglut -lSOIL
     
 Run
 ---------------
